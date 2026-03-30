@@ -370,7 +370,7 @@
       <span class="control__label">Duration</span>
       <span class="control__value" id="val-duration">350ms</span>
     </div>
-    <input type="range" id="ctrl-duration" min="100" max="800" step="10" value="350"
+    <input type="range" id="ctrl-duration" min="100" max="800" step="10" value="300"
       oninput="updateConfig()">
   </div>
 
@@ -380,7 +380,7 @@
       <span class="control__label">Stagger</span>
       <span class="control__value" id="val-stagger">50ms</span>
     </div>
-    <input type="range" id="ctrl-stagger" min="0" max="150" step="5" value="50"
+    <input type="range" id="ctrl-stagger" min="0" max="150" step="5" value="60"
       oninput="updateConfig()">
   </div>
 
@@ -400,7 +400,7 @@
       <span class="control__label">Fade-out Duration</span>
       <span class="control__value" id="val-fade">180ms</span>
     </div>
-    <input type="range" id="ctrl-fade" min="50" max="400" step="10" value="180"
+    <input type="range" id="ctrl-fade" min="50" max="400" step="10" value="240"
       oninput="updateConfig()">
   </div>
 
@@ -493,10 +493,10 @@
 
   // 현재 설정값
   let config = {
-    duration: 350,
-    stagger: 50,
+    duration: 300,
+    stagger: 60,
     distance: 60,
-    fade: 180,
+    fade: 240,
     easing: 'ease-in',
   };
 
