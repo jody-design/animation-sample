@@ -271,29 +271,76 @@
       color: #00A86B;
     }
 
-    /* CSS 코드 출력 */
-    .code-box {
-      background: #F3F4F5;
-      border-radius: 10px;
-      padding: 12px;
+    /* 코드 탭 */
+    .code-section { display: flex; flex-direction: column; gap: 0; }
+
+    .code-tabs {
+      display: flex;
+      gap: 2px;
+      background: #EAEBEC;
+      border-radius: 10px 10px 0 0;
+      padding: 3px;
+    }
+
+    .code-tab {
+      flex: 1;
+      padding: 6px 0;
       font-size: 11px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      color: rgba(6,11,17,0.7);
-      line-height: 1.7;
+      font-weight: 700;
+      color: rgba(6,11,17,0.4);
+      background: transparent;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.02em;
+    }
+
+    .code-tab.active {
+      background: #fff;
+      color: #060B11;
+      box-shadow: 0 1px 3px rgba(6,11,17,0.1);
+    }
+
+    .code-box {
+      background: #1C1E23;
+      border-radius: 0 0 10px 10px;
+      padding: 14px;
+      font-size: 11px;
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      line-height: 1.75;
       white-space: pre;
       overflow-x: auto;
-      cursor: pointer;
       position: relative;
-      transition: background 0.15s;
+      cursor: pointer;
+      min-height: 80px;
     }
-    .code-box:hover { background: #EAEBEC; }
+
+    .code-box:hover .code-copy-hint { opacity: 1; }
+
     .code-copy-hint {
-      position: absolute;
-      top: 8px; right: 8px;
+      position: sticky;
+      float: right;
+      top: 0;
       font-size: 10px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      color: rgba(6,11,17,0.3);
+      font-family: 'SF Mono', monospace;
+      color: rgba(255,255,255,0.3);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      margin-left: 8px;
     }
+
+    /* syntax highlight */
+    .tok-comment { color: #6B737E; }
+    .tok-selector { color: #79B8FF; }
+    .tok-prop { color: #B392F0; }
+    .tok-val { color: #9ECBFF; }
+    .tok-num { color: #F8B195; }
+    .tok-kw { color: #F97583; }
+    .tok-fn { color: #FFCD00; }
+    .tok-str { color: #9ECBFF; }
+    .tok-plain { color: #CDD5DF; }
   </style>
 </head>
 <body>
@@ -409,8 +456,15 @@
   </div>
 
   <!-- 코드 출력 -->
-  <div class="code-box" id="codeOutput" onclick="copyCss()" title="클릭해서 복사">
-    <span class="code-copy-hint">클릭해서 복사</span>
+  <div class="code-section">
+    <div class="code-tabs">
+      <button class="code-tab active" onclick="setCodeTab('css', this)">CSS</button>
+      <button class="code-tab" onclick="setCodeTab('js', this)">JavaScript</button>
+      <button class="code-tab" onclick="setCodeTab('react', this)">React</button>
+    </div>
+    <div class="code-box" id="codeOutput" onclick="copyCurrentTab()">
+      <span class="code-copy-hint">클릭해서 복사</span>
+    </div>
   </div>
 </div>
 
@@ -480,13 +534,36 @@
     renderCode();
   }
 
+  function highlight(code, lang) {
+    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    let c = esc(code);
+
+    if (lang === 'css') {
+      c = c
+        .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
+        .replace(/(@keyframes\s+\S+|[\w-.]+(?=\s*\{))/g, '<span class="tok-selector">$1</span>')
+        .replace(/([\w-]+)(?=\s*:)/g, '<span class="tok-prop">$1</span>')
+        .replace(/:\s*([^;{}\n]+)/g, (m, v) => ': <span class="tok-val">' + v + '</span>')
+        .replace(/(\d+(?:ms|px|s|%))/g, '<span class="tok-num">$1</span>');
+    } else if (lang === 'js' || lang === 'react') {
+      c = c
+        .replace(/(\/\/[^\n]*)/g, '<span class="tok-comment">$1</span>')
+        .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
+        .replace(/\b(const|let|var|function|return|if|else|export|import|from|default|type|interface|extends|async|await|setTimeout|clearTimeout|useRef|useState)\b/g, '<span class="tok-kw">$1</span>')
+        .replace(/\b([A-Z][a-zA-Z]+)\b/g, '<span class="tok-fn">$1</span>')
+        .replace(/(`[^`]*`|&#39;[^&#39;]*&#39;|&quot;[^&quot;]*&quot;)/g, '<span class="tok-str">$1</span>')
+        .replace(/\b(\d+)\b/g, '<span class="tok-num">$1</span>');
+    }
+
+    return '<span class="tok-plain">' + c + '</span>';
+  }
+
   function renderCode() {
     const box = document.getElementById('codeOutput');
-    // hint span 유지
-    box.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
     const hint = box.querySelector('.code-copy-hint');
-    box.textContent = getCssCode();
-    if (hint) box.appendChild(hint);
+    const lang = currentTab === 'css' ? 'css' : currentTab === 'js' ? 'js' : 'react';
+    box.innerHTML = highlight(getCodeText(currentTab), lang);
+    box.appendChild(hint);
   }
 
   function buildBlock(items) {
@@ -548,31 +625,167 @@
     navigator.clipboard.writeText(location.href).then(() => flashBtn('btn-link', '링크 복사'));
   }
 
+  let currentTab = 'css';
+
+  function setCodeTab(tab, btn) {
+    currentTab = tab;
+    document.querySelectorAll('.code-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCode();
+  }
+
+  function copyCurrentTab() {
+    const text = getCodeText(currentTab);
+    navigator.clipboard.writeText(text).then(() => {
+      const box = document.getElementById('codeOutput');
+      const hint = box.querySelector('.code-copy-hint');
+      hint.style.opacity = '1';
+      hint.textContent = '✓ 복사됨';
+      hint.style.color = '#00A86B';
+      setTimeout(() => {
+        hint.textContent = '클릭해서 복사';
+        hint.style.color = '';
+        hint.style.opacity = '';
+      }, 1500);
+    });
+  }
+
+  function getCodeText(tab) {
+    const s = config.stagger;
+    const d = config.duration;
+    const dist = config.distance;
+    const f = config.fade;
+    const e = config.easing;
+
+    if (tab === 'css') return getCssCode();
+
+    if (tab === 'js') return `// 리스트 전환 함수
+function switchList(wrapper, nextItems, buildFn) {
+  const STAGGER = ${s};     // 아이템 간 딜레이 (ms)
+  const DURATION = ${d};    // 아이템 애니메이션 시간 (ms)
+  const FADE = ${f};        // 구 리스트 fade-out 시간 (ms)
+
+  const oldBlock = wrapper.querySelector('.list-block');
+  const newBlock = buildFn(nextItems);
+
+  // 구 리스트 fade-out
+  oldBlock.style.animation =
+    \`blockFadeOut \${FADE}ms ease-out forwards\`;
+  oldBlock.addEventListener('animationend',
+    () => oldBlock.remove(), { once: true });
+
+  // 새 리스트 slide-up (stagger)
+  newBlock.classList.add('enter');
+  wrapper.appendChild(newBlock);
+
+  const items = newBlock.querySelectorAll('.menu-item');
+  items.forEach((el, i) => {
+    el.style.animationDelay = \`\${i * STAGGER}ms\`;
+  });
+
+  // 마지막 아이템 완료 후 클래스 정리
+  const last = items[items.length - 1];
+  last.addEventListener('animationend', () => {
+    newBlock.classList.remove('enter');
+    items.forEach(el => el.style.removeProperty('opacity'));
+  }, { once: true });
+}`;
+
+    if (tab === 'react') return `// useListAnimation.ts
+import { useRef, useState } from 'react';
+
+const STAGGER = ${s};
+const DURATION = ${d};
+const FADE_DURATION = ${f};
+
+export function useListAnimation() {
+  const [page, setPage] = useState(0);
+  const [animState, setAnimState] = useState<
+    'idle' | 'exit' | 'enter'
+  >('idle');
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+
+  const next = (total: number) => {
+    if (animState !== 'idle') return;
+    setAnimState('exit');
+
+    timer.current = setTimeout(() => {
+      setPage(p => (p + 1) % total);
+      setAnimState('enter');
+
+      setTimeout(() => {
+        setAnimState('idle');
+      }, DURATION + STAGGER * 3);
+    }, FADE_DURATION);
+  };
+
+  return { page, animState, next };
+}
+
+// styles.module.css (or Tailwind)
+/*
+.enter .item {
+  opacity: 0;
+  animation: itemSlideUp ${d}ms ${e} forwards;
+}
+.enter .item:nth-child(1) { animation-delay: 0ms; }
+.enter .item:nth-child(2) { animation-delay: ${s}ms; }
+.enter .item:nth-child(3) { animation-delay: ${s*2}ms; }
+.enter .item:nth-child(4) { animation-delay: ${s*3}ms; }
+
+.exit { animation: fadeOut ${f}ms ease-out forwards; }
+
+@keyframes itemSlideUp {
+  from { opacity: 0; transform: translateY(${dist}px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+*/`;
+
+    return '';
+  }
+
   function getCssCode() {
     const s = config.stagger;
-    return `.menu-item {
+    return `/* 진입: 아이템 개별 slide-up */
+@keyframes itemSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(${config.distance}px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 퇴장: 구 리스트 fade-out */
+@keyframes blockFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.list-block.enter .menu-item {
+  opacity: 0;
   animation: itemSlideUp ${config.duration}ms ${config.easing} forwards;
 }
 
-@keyframes itemSlideUp {
-  from { opacity: 0; transform: translateY(${config.distance}px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+/* stagger — 아이템 순서별 딜레이 */
+.list-block.enter .menu-item:nth-child(1) { animation-delay: 0ms; }
+.list-block.enter .menu-item:nth-child(2) { animation-delay: ${s}ms; }
+.list-block.enter .menu-item:nth-child(3) { animation-delay: ${s * 2}ms; }
+.list-block.enter .menu-item:nth-child(4) { animation-delay: ${s * 3}ms; }
 
-/* stagger delays */
-.menu-item:nth-child(1) { animation-delay: 0ms; }
-.menu-item:nth-child(2) { animation-delay: ${s}ms; }
-.menu-item:nth-child(3) { animation-delay: ${s * 2}ms; }
-.menu-item:nth-child(4) { animation-delay: ${s * 3}ms; }
-
-/* fade-out (구 리스트) */
 .list-block.exit {
   animation: blockFadeOut ${config.fade}ms ease-out forwards;
 }`;
   }
 
   function copyCss() {
-    navigator.clipboard.writeText(getCssCode()).then(() => flashBtn('btn-css', 'CSS 복사'));
+    navigator.clipboard.writeText(getCodeText(currentTab)).then(() => flashBtn('btn-css', 'CSS 복사'));
   }
 
   function downloadHtml() {
