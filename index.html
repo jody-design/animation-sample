@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=1000, initial-scale=1.0" />
-  <title>맞춤형 서비스 애니메이션 샘플</title>
+  <title>팔로우 급상승 애니메이션 샘플</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
 
@@ -25,25 +25,64 @@
        카드 (모바일 프리뷰)
     ──────────────────────────────── */
     .card {
-      width: 358px;
+      width: 375px;
       flex-shrink: 0;
       background: #fff;
       border-radius: 20px;
       box-shadow: 0 2px 12px rgba(6,11,17,0.08);
+      overflow: hidden;
+    }
+
+    .card__separator {
+      height: 12px;
+      background: rgba(135, 146, 156, 0.1);
     }
 
     .card__header {
-      padding: 20px 20px 16px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #060B11;
-      border-bottom: 1px solid rgba(6,11,17,0.06);
+      padding: 20px 24px 0;
     }
 
+    .card__title {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #060B11;
+      line-height: 26px;
+    }
+
+    .card__title-fire {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .card__title-question {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      opacity: 0.4;
+      flex-shrink: 0;
+    }
+
+    .card__subtitle {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(6,11,17,0.56);
+      line-height: 20px;
+      margin-top: 2px;
+    }
+
+    /* ────────────────────────────────
+       리스트 애니메이션
+    ──────────────────────────────── */
     .list-wrapper {
       position: relative;
       overflow: hidden;
-      height: 232px;
+      height: 156px;
+      margin-top: 8px;
     }
 
     .list-block {
@@ -65,55 +104,94 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .list-block.enter .menu-item {
+    .list-block.enter .follow-item {
       opacity: 0;
       animation: itemSlideUp var(--item-duration, 350ms) var(--easing, ease-in) forwards;
     }
 
-    .list-block.enter .menu-item:nth-child(1) { animation-delay: 0ms; }
-    .list-block.enter .menu-item:nth-child(2) { animation-delay: var(--stagger, 50ms); }
-    .list-block.enter .menu-item:nth-child(3) { animation-delay: calc(var(--stagger, 50ms) * 2); }
-    .list-block.enter .menu-item:nth-child(4) { animation-delay: calc(var(--stagger, 50ms) * 3); }
+    .list-block.enter .follow-item:nth-child(1) { animation-delay: 0ms; }
+    .list-block.enter .follow-item:nth-child(2) { animation-delay: var(--stagger, 50ms); }
+    .list-block.enter .follow-item:nth-child(3) { animation-delay: calc(var(--stagger, 50ms) * 2); }
 
-    .menu-item {
+    /* ────────────────────────────────
+       팔로우 아이템
+    ──────────────────────────────── */
+    .follow-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 0 20px;
-      height: 58px;
-      cursor: pointer;
+      gap: 10px;
+      padding: 8px 20px 8px 24px;
+      height: 52px;
     }
 
-    .menu-item__icon {
-      width: 36px; height: 36px;
+    .follow-avatar {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+      overflow: hidden;
       flex-shrink: 0;
     }
 
-    .menu-item__label {
-      flex: 1;
-      font-size: 14px;
-      font-weight: 500;
-      color: #060B11;
-      line-height: 1.4;
+    .follow-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .menu-item__chevron { color: rgba(6,11,17,0.28); flex-shrink: 0; }
+    .follow-text {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
 
+    .follow-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: #060B11;
+      line-height: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .follow-count {
+      font-size: 14px;
+      font-weight: 600;
+      color: #060B11;
+      line-height: 20px;
+    }
+
+    .follow-btn {
+      background: #FFEB00;
+      border: none;
+      border-radius: 16px;
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #060B11;
+      cursor: pointer;
+      flex-shrink: 0;
+      line-height: 20px;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    /* ────────────────────────────────
+       푸터: 더보기
+    ──────────────────────────────── */
     .card__footer {
-      border-top: 1px solid rgba(6,11,17,0.06);
-      padding: 14px 20px;
+      border-top: 0.5px solid rgba(135, 146, 156, 0.2);
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       cursor: pointer;
-      border-radius: 0 0 20px 20px;
       transition: background 0.15s;
     }
     .card__footer:active { background: rgba(6,11,17,0.03); }
+
+    .footer__text { font-size: 16px; font-weight: 400; color: rgba(6,11,17,0.56); }
 
     .footer__icon svg { display: block; }
     .footer__icon.spin svg { animation: spinOnce 0.45s cubic-bezier(0.22,1,0.36,1); }
@@ -121,9 +199,6 @@
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
     }
-
-    .footer__text { font-size: 13px; font-weight: 500; color: rgba(6,11,17,0.54); }
-    .footer__page { font-weight: 600; color: rgba(6,11,17,0.38); }
 
     /* ────────────────────────────────
        컨트롤 패널
@@ -196,7 +271,6 @@
       box-shadow: 0 1px 4px rgba(6,11,17,0.2);
     }
 
-    /* easing 선택 버튼 */
     .easing-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -214,6 +288,7 @@
       cursor: pointer;
       text-align: center;
       transition: all 0.15s;
+      font-family: inherit;
     }
 
     .easing-btn.active {
@@ -222,13 +297,11 @@
       border-color: #060B11;
     }
 
-    /* 구분선 */
     .divider {
       height: 1px;
       background: rgba(6,11,17,0.06);
     }
 
-    /* 재생 버튼 */
     .play-btn {
       width: 100%;
       padding: 13px;
@@ -240,10 +313,10 @@
       border-radius: 12px;
       cursor: pointer;
       transition: opacity 0.15s;
+      font-family: inherit;
     }
     .play-btn:active { opacity: 0.8; }
 
-    /* 공유 버튼 그룹 */
     .share-group {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -264,6 +337,7 @@
       color: #060B11;
       cursor: pointer;
       transition: all 0.15s;
+      font-family: inherit;
     }
     .share-btn:active { background: #F3F4F5; }
     .share-btn.copied {
@@ -271,7 +345,6 @@
       color: #00A86B;
     }
 
-    /* 코드 탭 */
     .code-section { display: flex; flex-direction: column; gap: 0; }
 
     .code-tabs {
@@ -294,6 +367,7 @@
       cursor: pointer;
       transition: all 0.15s;
       letter-spacing: 0.02em;
+      font-family: inherit;
     }
 
     .code-tab.active {
@@ -331,7 +405,6 @@
       margin-left: 8px;
     }
 
-    /* syntax highlight */
     .tok-comment { color: #6B737E; }
     .tok-selector { color: #79B8FF; }
     .tok-prop { color: #B392F0; }
@@ -347,16 +420,24 @@
 
 <!-- 카드 프리뷰 -->
 <div class="card">
-  <div class="card__header">조민형님을 위한 맞춤형 서비스</div>
+  <div class="card__separator"></div>
+  <div class="card__header">
+    <div class="card__title">
+      팔로우 급상승
+      <img class="card__title-fire" src="https://www.figma.com/api/mcp/asset/c490f014-7263-4d4e-9476-03b05873a5d4" alt="" />
+      <img class="card__title-question" src="https://www.figma.com/api/mcp/asset/241033d4-72fa-474b-bfab-b80a81c6ef78" alt="" />
+    </div>
+    <div class="card__subtitle">최근 일주일 동안</div>
+  </div>
   <div class="list-wrapper" id="listWrapper"></div>
   <div class="card__footer" onclick="switchPage()">
+    <span class="footer__text">더보기</span>
     <span class="footer__icon" id="footerIcon">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M14 8A6 6 0 1 1 8 2" stroke="rgba(6,11,17,0.54)" stroke-width="1.5" stroke-linecap="round"/>
         <path d="M11 2l3 0 0 3" stroke="rgba(6,11,17,0.54)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </span>
-    <span class="footer__text">다른 서비스 더 보기 <span class="footer__page" id="pageText"></span></span>
   </div>
 </div>
 
@@ -364,49 +445,40 @@
 <div class="panel">
   <div class="panel__title">애니메이션 조절</div>
 
-  <!-- Duration -->
   <div class="control">
     <div class="control__header">
       <span class="control__label">Duration</span>
       <span class="control__value" id="val-duration">350ms</span>
     </div>
-    <input type="range" id="ctrl-duration" min="100" max="800" step="10" value="300"
-      oninput="updateConfig()">
+    <input type="range" id="ctrl-duration" min="100" max="800" step="10" value="300" oninput="updateConfig()">
   </div>
 
-  <!-- Stagger -->
   <div class="control">
     <div class="control__header">
       <span class="control__label">Stagger</span>
       <span class="control__value" id="val-stagger">50ms</span>
     </div>
-    <input type="range" id="ctrl-stagger" min="0" max="150" step="5" value="60"
-      oninput="updateConfig()">
+    <input type="range" id="ctrl-stagger" min="0" max="150" step="5" value="60" oninput="updateConfig()">
   </div>
 
-  <!-- Slide Distance -->
   <div class="control">
     <div class="control__header">
       <span class="control__label">Slide Distance</span>
       <span class="control__value" id="val-distance">60px</span>
     </div>
-    <input type="range" id="ctrl-distance" min="10" max="120" step="5" value="60"
-      oninput="updateConfig()">
+    <input type="range" id="ctrl-distance" min="10" max="120" step="5" value="60" oninput="updateConfig()">
   </div>
 
-  <!-- Fade Duration -->
   <div class="control">
     <div class="control__header">
       <span class="control__label">Fade-out Duration</span>
       <span class="control__value" id="val-fade">180ms</span>
     </div>
-    <input type="range" id="ctrl-fade" min="50" max="400" step="10" value="240"
-      oninput="updateConfig()">
+    <input type="range" id="ctrl-fade" min="50" max="400" step="10" value="240" oninput="updateConfig()">
   </div>
 
   <div class="divider"></div>
 
-  <!-- Easing -->
   <div class="control">
     <div class="control__header">
       <span class="control__label">Easing</span>
@@ -423,12 +495,10 @@
 
   <div class="divider"></div>
 
-  <!-- 재생 버튼 -->
   <button class="play-btn" onclick="switchPage()">▶ 애니메이션 실행</button>
 
   <div class="divider"></div>
 
-  <!-- 공유 버튼들 -->
   <div class="control__label" style="margin-bottom:-8px">공유하기</div>
   <div class="share-group">
     <button class="share-btn" id="btn-link" onclick="copyLink()">
@@ -455,7 +525,6 @@
     </button>
   </div>
 
-  <!-- 코드 출력 -->
   <div class="code-section">
     <div class="code-tabs">
       <button class="code-tab active" onclick="setCodeTab('css', this)">CSS</button>
@@ -469,29 +538,27 @@
 </div>
 
 <script>
+  const avatarImgs = {
+    neo:   'https://www.figma.com/api/mcp/asset/97b96bf9-2102-4bd0-91d2-c1d43eeb6161',
+    frodo: 'https://www.figma.com/api/mcp/asset/4b98df05-0424-4186-8a24-b8a2626d04e8',
+  };
+
   const pages = [
     [
-      { icon: '🏦', bg: '#FFF6E0', label: '세금 아끼는 RIA계좌 보러가기' },
-      { icon: '✅', bg: '#E8F8F0', label: '출석체크하고 적립금 받기' },
-      { icon: '🧒', bg: '#E8F0FF', label: '아이 계좌 만들고 2만원 받기' },
-      { icon: '✨', bg: '#EEF0FF', label: '토스증권 AI가 찾은 시그널 보기' },
+      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5천', hasBtn: true,  bg: '#B8A7FF', char: 'neo'   },
+      { name: '겸손한포도',                 followers: '팔로워 500', hasBtn: false, bg: '#C7BDFF', char: 'frodo' },
+      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5',   hasBtn: true,  bg: '#B8A7FF', char: 'neo'   },
     ],
     [
-      { icon: '🎫', bg: '#FFF3E0', label: '오늘의 미션 확인하기' },
-      { icon: '📢', bg: '#FFF0F0', label: '어닝콜 모아보기' },
-      { icon: '🛵', bg: '#E8F4FF', label: '배민클럽 2개월 무료 이벤트 보기' },
-      { icon: '🟢', bg: '#E8F8F0', label: 'ETF 투자하기' },
+      { name: '카카오페이운용', followers: '팔로워 3.2만', hasBtn: true,  bg: '#FFD6A5', char: 'neo'   },
+      { name: '강남핀테크',     followers: '팔로워 1.8천', hasBtn: false, bg: '#A8E6CF', char: 'frodo' },
+      { name: '투자의신',       followers: '팔로워 12',    hasBtn: true,  bg: '#FFB3C1', char: 'neo'   },
     ],
   ];
-
-  const chevron = `<svg width="7" height="12" viewBox="0 0 7 12" fill="none">
-    <path d="M1 1l5 5-5 5" stroke="rgba(6,11,17,0.28)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`;
 
   let current = 1;
   let animating = false;
 
-  // 현재 설정값
   let config = {
     duration: 300,
     stagger: 60,
@@ -537,7 +604,6 @@
   function highlight(code, lang) {
     const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     let c = esc(code);
-
     if (lang === 'css') {
       c = c
         .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
@@ -554,7 +620,6 @@
         .replace(/(`[^`]*`|&#39;[^&#39;]*&#39;|&quot;[^&quot;]*&quot;)/g, '<span class="tok-str">$1</span>')
         .replace(/\b(\d+)\b/g, '<span class="tok-num">$1</span>');
     }
-
     return '<span class="tok-plain">' + c + '</span>';
   }
 
@@ -570,20 +635,20 @@
     const block = document.createElement('div');
     block.className = 'list-block';
     block.innerHTML = items.map(item => `
-      <div class="menu-item">
-        <div class="menu-item__icon" style="background:${item.bg}">${item.icon}</div>
-        <div class="menu-item__label">${item.label}</div>
-        <span class="menu-item__chevron">${chevron}</span>
+      <div class="follow-item">
+        <div class="follow-avatar" style="background:${item.bg}">
+          <img src="${avatarImgs[item.char]}" alt="${item.name}" />
+        </div>
+        <div class="follow-text">
+          <div class="follow-name">${item.name}</div>
+          <div class="follow-count">${item.followers}</div>
+        </div>
+        ${item.hasBtn ? '<button class="follow-btn">팔로우</button>' : ''}
       </div>
     `).join('');
     return block;
   }
 
-  function updatePageText() {
-    document.getElementById('pageText').textContent = `${current + 1} / ${pages.length}`;
-  }
-
-  // ── URL 해시로 설정 불러오기 ──
   function loadFromHash() {
     try {
       const hash = location.hash.slice(1);
@@ -611,7 +676,6 @@
     history.replaceState(null, '', '#' + p.toString());
   }
 
-  // ── 공유 기능 ──
   function flashBtn(id, label) {
     const btn = document.getElementById(id);
     const orig = btn.innerHTML;
@@ -661,29 +725,26 @@
 
     if (tab === 'js') return `// 리스트 전환 함수
 function switchList(wrapper, nextItems, buildFn) {
-  const STAGGER = ${s};     // 아이템 간 딜레이 (ms)
-  const DURATION = ${d};    // 아이템 애니메이션 시간 (ms)
-  const FADE = ${f};        // 구 리스트 fade-out 시간 (ms)
+  const STAGGER = ${s};
+  const DURATION = ${d};
+  const FADE = ${f};
 
   const oldBlock = wrapper.querySelector('.list-block');
   const newBlock = buildFn(nextItems);
 
-  // 구 리스트 fade-out
   oldBlock.style.animation =
     \`blockFadeOut \${FADE}ms ease-out forwards\`;
   oldBlock.addEventListener('animationend',
     () => oldBlock.remove(), { once: true });
 
-  // 새 리스트 slide-up (stagger)
   newBlock.classList.add('enter');
   wrapper.appendChild(newBlock);
 
-  const items = newBlock.querySelectorAll('.menu-item');
+  const items = newBlock.querySelectorAll('.follow-item');
   items.forEach((el, i) => {
     el.style.animationDelay = \`\${i * STAGGER}ms\`;
   });
 
-  // 마지막 아이템 완료 후 클래스 정리
   const last = items[items.length - 1];
   last.addEventListener('animationend', () => {
     newBlock.classList.remove('enter');
@@ -715,24 +776,21 @@ export function useListAnimation() {
 
       setTimeout(() => {
         setAnimState('idle');
-      }, DURATION + STAGGER * 3);
+      }, DURATION + STAGGER * 2);
     }, FADE_DURATION);
   };
 
   return { page, animState, next };
 }
 
-// styles.module.css (or Tailwind)
 /*
-.enter .item {
+.enter .follow-item {
   opacity: 0;
   animation: itemSlideUp ${d}ms ${e} forwards;
 }
-.enter .item:nth-child(1) { animation-delay: 0ms; }
-.enter .item:nth-child(2) { animation-delay: ${s}ms; }
-.enter .item:nth-child(3) { animation-delay: ${s*2}ms; }
-.enter .item:nth-child(4) { animation-delay: ${s*3}ms; }
-
+.enter .follow-item:nth-child(1) { animation-delay: 0ms; }
+.enter .follow-item:nth-child(2) { animation-delay: ${s}ms; }
+.enter .follow-item:nth-child(3) { animation-delay: ${s*2}ms; }
 .exit { animation: fadeOut ${f}ms ease-out forwards; }
 
 @keyframes itemSlideUp {
@@ -768,16 +826,15 @@ export function useListAnimation() {
   to   { opacity: 0; }
 }
 
-.list-block.enter .menu-item {
+.list-block.enter .follow-item {
   opacity: 0;
   animation: itemSlideUp ${config.duration}ms ${config.easing} forwards;
 }
 
-/* stagger — 아이템 순서별 딜레이 */
-.list-block.enter .menu-item:nth-child(1) { animation-delay: 0ms; }
-.list-block.enter .menu-item:nth-child(2) { animation-delay: ${s}ms; }
-.list-block.enter .menu-item:nth-child(3) { animation-delay: ${s * 2}ms; }
-.list-block.enter .menu-item:nth-child(4) { animation-delay: ${s * 3}ms; }
+/* stagger */
+.list-block.enter .follow-item:nth-child(1) { animation-delay: 0ms; }
+.list-block.enter .follow-item:nth-child(2) { animation-delay: ${s}ms; }
+.list-block.enter .follow-item:nth-child(3) { animation-delay: ${s * 2}ms; }
 
 .list-block.exit {
   animation: blockFadeOut ${config.fade}ms ease-out forwards;
@@ -799,11 +856,9 @@ export function useListAnimation() {
     flashBtn('btn-html', 'HTML 다운로드');
   }
 
-  // 초기 렌더
   const wrapper = document.getElementById('listWrapper');
   const initBlock = buildBlock(pages[current]);
   wrapper.appendChild(initBlock);
-  updatePageText();
   loadFromHash();
   applyConfig();
   updateConfig();
@@ -829,16 +884,15 @@ export function useListAnimation() {
 
     oldBlock.addEventListener('animationend', () => oldBlock.remove(), { once: true });
 
-    const items = newBlock.querySelectorAll('.menu-item');
+    const items = newBlock.querySelectorAll('.follow-item');
     const lastItem = items[items.length - 1];
     lastItem.addEventListener('animationend', () => {
       newBlock.classList.remove('enter');
-      newBlock.querySelectorAll('.menu-item').forEach(el => el.style.removeProperty('opacity'));
+      newBlock.querySelectorAll('.follow-item').forEach(el => el.style.removeProperty('opacity'));
       animating = false;
     }, { once: true });
 
     current = next;
-    updatePageText();
   }
 </script>
 
