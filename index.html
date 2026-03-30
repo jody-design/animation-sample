@@ -33,13 +33,11 @@
       overflow: hidden;
     }
 
-    /* 12px separator */
     .card__separator {
       height: 12px;
       background: rgba(135,146,156,0.1);
     }
 
-    /* 헤더 */
     .card__header {
       padding: 20px 24px 0;
     }
@@ -68,13 +66,15 @@
     .list-wrapper {
       position: relative;
       overflow: hidden;
-      height: 156px;
+      height: 180px; /* 3 items × 52px + pt 8px + pb 16px */
       margin-top: 8px;
     }
 
     .list-block {
       position: absolute;
       top: 0; left: 0; right: 0;
+      padding-top: 8px;
+      padding-bottom: 16px;
     }
 
     .list-block.exit {
@@ -559,7 +559,6 @@
 </div>
 
 <script>
-  // 스쿼클 마스크 (FollowModule.tsx 기준)
   const MASK_SVG_URL = 'data:image/svg+xml,' + encodeURIComponent(
     '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display:block;" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M18 36C4.75007 36 0 31.2502 0 18C0 5.24989 4.75007 0 18 0C31.2502 0 36 4.75007 36 18C36 31.2502 31.2502 36 18 36Z" fill="white"/></svg>'
   );
@@ -837,7 +836,6 @@ export function useListAnimation() {
     flashBtn('btn-html');
   }
 
-  // 초기 렌더
   const wrapper = document.getElementById('listWrapper');
   wrapper.appendChild(buildBlock(pages[current]));
   loadFromHash();
