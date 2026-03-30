@@ -412,8 +412,8 @@
       <span class="control__label">Easing</span>
     </div>
     <div class="easing-grid">
-      <button class="easing-btn active" data-easing="ease-in" onclick="setEasing(this)">ease-in</button>
-      <button class="easing-btn" data-easing="ease-out" onclick="setEasing(this)">ease-out</button>
+      <button class="easing-btn" data-easing="ease-in" onclick="setEasing(this)">ease-in</button>
+      <button class="easing-btn active" data-easing="ease-out" onclick="setEasing(this)">ease-out</button>
       <button class="easing-btn" data-easing="ease-in-out" onclick="setEasing(this)">ease-in-out</button>
       <button class="easing-btn" data-easing="linear" onclick="setEasing(this)">linear</button>
       <button class="easing-btn" data-easing="cubic-bezier(0.22,1,0.36,1)" onclick="setEasing(this)">spring</button>
@@ -497,7 +497,7 @@
     stagger: 60,
     distance: 60,
     fade: 240,
-    easing: 'ease-in',
+    easing: 'ease-out',
   };
 
   function applyConfig() {
