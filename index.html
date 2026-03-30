@@ -45,7 +45,7 @@
     .card__title {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 0;
       font-size: 18px;
       font-weight: 600;
       color: #060B11;
@@ -179,16 +179,11 @@
       line-height: 20px;
       font-family: inherit;
       white-space: nowrap;
-      transition: transform 0.15s, background 0.15s, color 0.15s;
+      transition: transform 0.15s, opacity 0.15s;
     }
 
     .follow-btn:active {
       transform: scale(0.95);
-    }
-
-    .follow-btn.followed {
-      background: #F3F4F5;
-      color: rgba(6,11,17,0.56);
     }
 
     /* ────────────────────────────────
@@ -564,14 +559,14 @@
 
   const pages = [
     [
-      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5천', showBtn: true,  followed: false, bg: '#b8a7ff', img: 'https://images.unsplash.com/photo-1772371272167-0117a6573d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
-      { name: '겸손한포도',                 followers: '팔로워 500', showBtn: false, followed: true,  bg: '#c7bdff', img: 'https://images.unsplash.com/photo-1673047234576-76748e7cc74f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
-      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5',   showBtn: true,  followed: false, bg: '#b8a7ff', img: 'https://images.unsplash.com/photo-1772371272167-0117a6573d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5천', showBtn: true,  bg: '#b8a7ff', img: 'https://images.unsplash.com/photo-1772371272167-0117a6573d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '겸손한포도',                 followers: '팔로워 500', showBtn: false, bg: '#c7bdff', img: 'https://images.unsplash.com/photo-1673047234576-76748e7cc74f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5',   showBtn: true,  bg: '#b8a7ff', img: 'https://images.unsplash.com/photo-1772371272167-0117a6573d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
     ],
     [
-      { name: '카카오페이운용', followers: '팔로워 3.2만', showBtn: true,  followed: false, bg: '#FFD6A5', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
-      { name: '강남핀테크',     followers: '팔로워 1.8천', showBtn: false, followed: true,  bg: '#A8E6CF', img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
-      { name: '투자의신',       followers: '팔로워 12',    showBtn: true,  followed: false, bg: '#FFB3C1', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '카카오페이운용', followers: '팔로워 3.2만', showBtn: true,  bg: '#FFD6A5', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '강남핀테크',     followers: '팔로워 1.8천', showBtn: false, bg: '#A8E6CF', img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '투자의신',       followers: '팔로워 12',    showBtn: true,  bg: '#FFB3C1', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
     ],
   ];
 
@@ -611,8 +606,7 @@
   }
 
   function toggleFollow(btn) {
-    const isFollowed = btn.classList.toggle('followed');
-    btn.textContent = isFollowed ? '팔로잉' : '팔로우';
+    btn.remove();
   }
 
   function buildBlock(items) {
@@ -631,7 +625,7 @@
           <div class="follow-name">${item.name}</div>
           <div class="follow-count">${item.followers}</div>
         </div>
-        ${item.showBtn ? `<button class="follow-btn${item.followed ? ' followed' : ''}" onclick="toggleFollow(this)">${item.followed ? '팔로잉' : '팔로우'}</button>` : ''}
+        ${item.showBtn ? '<button class="follow-btn" onclick="toggleFollow(this)">팔로우</button>' : ''}
       </div>
     `).join('');
     return block;
