@@ -33,11 +33,13 @@
       overflow: hidden;
     }
 
+    /* 12px separator */
     .card__separator {
       height: 12px;
-      background: rgba(135, 146, 156, 0.1);
+      background: rgba(135,146,156,0.1);
     }
 
+    /* 헤더 */
     .card__header {
       padding: 20px 24px 0;
     }
@@ -45,30 +47,15 @@
     .card__title {
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 4px;
       font-size: 18px;
       font-weight: 600;
       color: #060B11;
       line-height: 26px;
     }
 
-    .card__title-fire {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .card__title-question {
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
-      opacity: 0.4;
-      flex-shrink: 0;
-    }
-
     .card__subtitle {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 400;
       color: rgba(6,11,17,0.56);
       line-height: 20px;
@@ -119,20 +106,39 @@
     .follow-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 20px 8px 24px;
+      gap: 12px;
+      padding: 8px 24px;
       height: 52px;
+      background: #fff;
     }
 
+    /* 스쿼클 마스크 아바타 */
     .follow-avatar {
       width: 36px;
       height: 36px;
-      border-radius: 50%;
-      overflow: hidden;
       flex-shrink: 0;
+      position: relative;
     }
 
-    .follow-avatar img {
+    .follow-avatar__inner {
+      position: absolute;
+      inset: 0;
+      mask-size: 36px 36px;
+      mask-position: 0 0;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 36px 36px;
+      -webkit-mask-position: 0 0;
+      -webkit-mask-repeat: no-repeat;
+    }
+
+    .follow-avatar__bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .follow-avatar__img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -145,7 +151,7 @@
     }
 
     .follow-name {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 400;
       color: #060B11;
       line-height: 20px;
@@ -174,27 +180,37 @@
       line-height: 20px;
       font-family: inherit;
       white-space: nowrap;
+      transition: transform 0.15s, background 0.15s, color 0.15s;
+    }
+
+    .follow-btn:active {
+      transform: scale(0.95);
+    }
+
+    .follow-btn.followed {
+      background: #F3F4F5;
+      color: rgba(6,11,17,0.56);
     }
 
     /* ────────────────────────────────
        푸터: 더보기
     ──────────────────────────────── */
     .card__footer {
-      border-top: 0.5px solid rgba(135, 146, 156, 0.2);
+      border-top: 0.5px solid rgba(135,146,156,0.2);
       padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: opacity 0.15s;
     }
-    .card__footer:active { background: rgba(6,11,17,0.03); }
+    .card__footer:active { opacity: 0.6; }
 
-    .footer__text { font-size: 16px; font-weight: 400; color: rgba(6,11,17,0.56); }
+    .footer__text { font-size: 16px; font-weight: 400; color: rgba(6,11,17,0.56); line-height: 24px; }
 
-    .footer__icon svg { display: block; }
-    .footer__icon.spin svg { animation: spinOnce 0.45s cubic-bezier(0.22,1,0.36,1); }
+    .footer__icon { display: flex; align-items: center; }
+    .footer__icon.spin .spin-target { animation: spinOnce 0.45s cubic-bezier(0.22,1,0.36,1); }
     @keyframes spinOnce {
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
@@ -223,11 +239,7 @@
       border-bottom: 1px solid rgba(6,11,17,0.06);
     }
 
-    .control {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .control { display: flex; flex-direction: column; gap: 8px; }
 
     .control__header {
       display: flex;
@@ -271,11 +283,7 @@
       box-shadow: 0 1px 4px rgba(6,11,17,0.2);
     }
 
-    .easing-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
+    .easing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     .easing-btn {
       padding: 8px 0;
@@ -297,10 +305,7 @@
       border-color: #060B11;
     }
 
-    .divider {
-      height: 1px;
-      background: rgba(6,11,17,0.06);
-    }
+    .divider { height: 1px; background: rgba(6,11,17,0.06); }
 
     .play-btn {
       width: 100%;
@@ -317,11 +322,7 @@
     }
     .play-btn:active { opacity: 0.8; }
 
-    .share-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
+    .share-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     .share-btn {
       display: flex;
@@ -340,10 +341,7 @@
       font-family: inherit;
     }
     .share-btn:active { background: #F3F4F5; }
-    .share-btn.copied {
-      border-color: #00A86B;
-      color: #00A86B;
-    }
+    .share-btn.copied { border-color: #00A86B; color: #00A86B; }
 
     .code-section { display: flex; flex-direction: column; gap: 0; }
 
@@ -424,19 +422,42 @@
   <div class="card__header">
     <div class="card__title">
       팔로우 급상승
-      <img class="card__title-fire" src="https://www.figma.com/api/mcp/asset/c490f014-7263-4d4e-9476-03b05873a5d4" alt="" />
-      <img class="card__title-question" src="https://www.figma.com/api/mcp/asset/241033d4-72fa-474b-bfab-b80a81c6ef78" alt="" />
+      <!-- 불꽃 아이콘 -->
+      <div style="overflow:hidden;position:relative;flex-shrink:0;width:24px;height:24px;">
+        <div style="position:absolute;top:15.33%;right:21.33%;bottom:15.67%;left:21.33%;">
+          <svg style="position:absolute;display:block;width:100%;height:100%;" viewBox="0 0 13.7601 16.5601" fill="none">
+            <path d="M10.4827 5.36691C10.5308 5.24876 10.6059 5.14406 10.7018 5.06147C10.7978 4.97889 10.9116 4.92078 11.034 4.89211C11.1565 4.86344 11.2839 4.86501 11.4056 4.89662C11.5274 4.92823 11.6399 4.98904 11.7339 5.07391C12.3879 5.70966 12.9074 6.47483 13.2603 7.32251C13.7794 8.57641 13.8977 9.965 13.5982 11.2912C13.2952 12.6272 12.5911 13.8339 11.5837 14.7437C10.5574 15.6796 9.28159 16.2848 7.91762 16.4827C6.54665 16.688 5.14669 16.4822 3.88877 15.8904C2.65055 15.3116 1.61268 14.3658 0.910888 13.1767C0.220786 12.0111 -0.0900737 10.6534 0.0225792 9.2973C0.141132 7.93511 0.672307 6.64403 1.54275 5.6026C2.34353 4.64709 3.37577 3.95911 4.04517 2.88893C4.35688 2.39516 4.59306 1.85604 4.74577 1.29002C4.74577 1.21358 4.81469 0.984236 4.85848 0.710321C4.88299 0.563722 4.94457 0.426186 5.03734 0.311333C5.13011 0.196481 5.25072 0.108358 5.38725 0.0555798C5.52379 0.00280143 5.67158 -0.0127533 5.81583 0.0104789C5.96008 0.033711 6.09586 0.0948974 6.20973 0.188005C7.37459 1.09537 8.89736 2.87508 9.30392 6.05146C9.34409 6.36533 9.70378 6.52275 9.91129 6.28387C10.1473 6.01217 10.3406 5.70294 10.4827 5.36691Z" fill="#FF4C00"/>
+            <path d="M9.10717 9.39025C9.13926 9.3252 9.18617 9.26883 9.244 9.2258C9.30184 9.18278 9.36889 9.15433 9.43962 9.14289C9.51036 9.13146 9.58274 9.13735 9.65066 9.16004C9.71858 9.18273 9.78011 9.2216 9.83012 9.27338C10.1764 9.65925 10.441 10.1132 10.6076 10.6073C10.8524 11.3381 10.8639 12.1295 10.6405 12.8691C10.4147 13.6141 9.9661 14.2702 9.35699 14.7461C8.73608 15.2361 7.98663 15.5288 7.2034 15.5874C6.4159 15.6499 5.62841 15.4783 4.93713 15.0936C4.25653 14.7171 3.70453 14.1405 3.35331 13.4392C3.00779 12.7517 2.88555 11.9703 3.00397 11.2064C3.12598 10.4392 3.47968 9.72862 4.01621 9.17275C4.5097 8.66283 5.12403 8.31357 5.54743 7.73352C5.74442 7.466 5.90028 7.16983 6.00978 6.85513C6.01285 6.81183 6.06122 6.68459 6.0971 6.53112C6.11691 6.44902 6.15742 6.37351 6.21476 6.31209C6.2721 6.25066 6.34419 6.20546 6.42391 6.18092C6.50364 6.15638 6.58827 6.15337 6.66933 6.1722C6.75039 6.19103 6.82511 6.23102 6.88611 6.28825C7.43953 6.78339 8.12473 7.67615 8.34744 9.13201C8.41382 9.56597 8.9073 9.78221 9.10717 9.39025Z" fill="#FFDD00"/>
+            <path d="M2.07215 2.10301C2.08166 2.07961 2.09652 2.05887 2.11548 2.04251C2.13444 2.02616 2.15695 2.01465 2.18115 2.00897C2.20535 2.00329 2.23054 2.0036 2.2546 2.00986C2.27866 2.01612 2.30091 2.02817 2.31948 2.04498C2.44878 2.1709 2.55146 2.32245 2.62122 2.49035C2.72384 2.73871 2.74721 3.01374 2.68801 3.27641C2.62813 3.54103 2.48895 3.78004 2.28981 3.96025C2.08693 4.14563 1.83473 4.26549 1.56511 4.3047C1.29411 4.34535 1.01737 4.30459 0.76871 4.18737C0.523947 4.07273 0.318786 3.8854 0.180059 3.64988C0.0436437 3.41902 -0.0178053 3.1501 0.00446334 2.8815C0.0278981 2.61169 0.132898 2.35597 0.304963 2.1497C0.463255 1.96044 0.667304 1.82417 0.799626 1.6122C0.861244 1.5144 0.90793 1.40762 0.938117 1.29551C0.938117 1.28037 0.951742 1.23495 0.960398 1.18069C0.965242 1.15166 0.977415 1.12441 0.995753 1.10167C1.01409 1.07892 1.03793 1.06146 1.06492 1.05101C1.09191 1.04056 1.12113 1.03747 1.14964 1.04208C1.17816 1.04668 1.205 1.0588 1.22751 1.07724C1.4306 1.23576 1.68874 1.52869 1.80197 2.02731C1.83635 2.17873 2.01178 2.24607 2.07215 2.10301Z" fill="#FF4C00"/>
+          </svg>
+        </div>
+      </div>
+      <!-- 물음표 아이콘 -->
+      <div style="position:relative;flex-shrink:0;width:20px;height:20px;">
+        <div style="position:absolute;inset:8.33%;">
+          <svg style="position:absolute;display:block;width:100%;height:100%;" viewBox="0 0 16.6667 16.6667" fill="none">
+            <path clip-rule="evenodd" d="M8.33333 0C12.9357 0 16.6667 3.73096 16.6667 8.33333C16.6667 12.9357 12.9357 16.6667 8.33333 16.6667C3.73096 16.6667 0 12.9357 0 8.33333C0 3.73096 3.73096 0 8.33333 0ZM8.33333 10.8333C8.79357 10.8333 9.16667 11.2064 9.16667 11.6667C9.16667 12.1269 8.79357 12.5 8.33333 12.5C7.8731 12.5 7.5 12.1269 7.5 11.6667C7.5 11.2064 7.8731 10.8333 8.33333 10.8333ZM8.19022 4.16671L8.33325 4.17154C9.1378 4.16775 9.90084 4.50426 10.4082 5.08661C10.6903 5.45758 10.8391 5.90242 10.8332 6.35721C10.8324 6.76151 10.6994 7.15596 10.4519 7.48793C10.1786 7.83762 9.84741 8.14454 9.47071 8.39717C9.03707 8.72267 8.97042 8.87718 8.96017 9.16066L8.95831 9.32987C8.95831 9.65177 8.6785 9.91272 8.33333 9.91272C8.17457 9.91272 8.02963 9.85751 7.91939 9.76656C7.78996 9.65977 7.70836 9.50371 7.70836 9.32987L7.72796 9.07955C7.78157 8.45869 7.87448 8.17938 8.69573 7.47628C8.9654 7.30496 9.20384 7.0944 9.40196 6.85263C9.51699 6.71172 9.58051 6.54012 9.5832 6.36304C9.58682 6.15621 9.52367 5.95314 9.40196 5.78019C9.13108 5.49547 8.74138 5.33395 8.33325 5.33723C7.73125 5.26409 7.17656 5.65206 7.08329 6.2115C7.08329 6.5334 6.80348 6.79435 6.45831 6.79435C6.11315 6.79435 5.83333 6.5334 5.83333 6.2115C5.91697 5.04934 6.95761 4.15965 8.19022 4.16671Z" fill="#060B11" fill-opacity="0.28" fill-rule="evenodd"/>
+          </svg>
+        </div>
+      </div>
     </div>
     <div class="card__subtitle">최근 일주일 동안</div>
   </div>
+
   <div class="list-wrapper" id="listWrapper"></div>
+
   <div class="card__footer" onclick="switchPage()">
     <span class="footer__text">더보기</span>
     <span class="footer__icon" id="footerIcon">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M14 8A6 6 0 1 1 8 2" stroke="rgba(6,11,17,0.54)" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M11 2l3 0 0 3" stroke="rgba(6,11,17,0.54)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <span class="spin-target" style="display:flex;align-items:center;">
+        <div style="overflow:hidden;position:relative;flex-shrink:0;width:20px;height:20px;">
+          <div style="position:absolute;top:13.75%;right:5.17%;bottom:13.33%;left:5.84%;">
+            <svg style="position:absolute;display:block;width:100%;height:100%;" viewBox="0 0 17.799 14.5832" fill="none">
+              <path d="M1.73885 6.28615C1.94597 6.04868 2.2928 6.00542 2.54939 6.17189L2.62361 6.22853L4.43025 7.82423C4.68891 8.05277 4.71344 8.44837 4.48494 8.70705C4.2772 8.94217 3.93175 8.98342 3.67635 8.8174L3.60213 8.76173L2.94881 8.18459C3.07374 9.03326 3.37803 9.85406 3.85799 10.5947C5.66729 13.3869 9.37943 14.1725 12.151 12.3516C13.0479 11.7621 13.7558 10.9589 14.2271 10.0156C14.3814 9.70686 14.7572 9.58206 15.066 9.73634C15.3746 9.89069 15.4995 10.2655 15.3453 10.5742C14.7762 11.7132 13.9203 12.6849 12.8375 13.3965C9.48569 15.5986 4.9951 14.6479 2.80916 11.2744C2.20663 10.3446 1.8312 9.30919 1.69295 8.24025L1.09627 8.92677C0.890234 9.16324 0.545165 9.20701 0.288652 9.04298L0.214434 8.98732C-0.0221552 8.78118 -0.0661088 8.43626 0.0982227 8.1797L0.153887 8.10548L1.73885 6.28615ZM4.91658 1.18654C8.26853 -1.01566 12.76 -0.0642201 14.9459 3.30959C15.5562 4.25165 15.9313 5.30192 16.065 6.38576L16.7115 5.6758C16.9223 5.44344 17.2679 5.40591 17.5211 5.57521L17.5943 5.63283C17.8265 5.84367 17.8633 6.18928 17.6939 6.4424L17.6373 6.51564L15.9937 8.32716C15.7819 8.56075 15.4336 8.59664 15.1803 8.42482L15.108 8.3672L13.3082 6.71193C13.0544 6.4783 13.0377 6.08312 13.2711 5.82912C13.4834 5.59829 13.8296 5.56349 14.0816 5.73439L14.1549 5.79201L14.8033 6.38869C14.6775 5.54363 14.3741 4.727 13.8961 3.98927C12.0869 1.19678 8.37481 0.410472 5.60311 2.23146C4.68401 2.83533 3.96334 3.66402 3.49275 4.63673C3.34237 4.94733 2.96846 5.07707 2.65779 4.92677C2.3472 4.77639 2.21746 4.40248 2.36775 4.09181C2.93593 2.91755 3.80719 1.91543 4.91658 1.18654Z" fill="#060B11" fill-opacity="0.56"/>
+            </svg>
+          </div>
+        </div>
+      </span>
     </span>
   </div>
 </div>
@@ -538,34 +559,28 @@
 </div>
 
 <script>
-  const avatarImgs = {
-    neo:   'https://www.figma.com/api/mcp/asset/97b96bf9-2102-4bd0-91d2-c1d43eeb6161',
-    frodo: 'https://www.figma.com/api/mcp/asset/4b98df05-0424-4186-8a24-b8a2626d04e8',
-  };
+  // 스쿼클 마스크 (FollowModule.tsx 기준)
+  const MASK_SVG_URL = 'data:image/svg+xml,' + encodeURIComponent(
+    '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display:block;" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M18 36C4.75007 36 0 31.2502 0 18C0 5.24989 4.75007 0 18 0C31.2502 0 36 4.75007 36 18C36 31.2502 31.2502 36 18 36Z" fill="white"/></svg>'
+  );
 
   const pages = [
     [
-      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5천', hasBtn: true,  bg: '#B8A7FF', char: 'neo'   },
-      { name: '겸손한포도',                 followers: '팔로워 500', hasBtn: false, bg: '#C7BDFF', char: 'frodo' },
-      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5',   hasBtn: true,  bg: '#B8A7FF', char: 'neo'   },
+      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5천', showBtn: true,  followed: false, bg: '#b8a7ff', img: 'https://images.unsplash.com/photo-1772371272167-0117a6573d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '겸손한포도',                 followers: '팔로워 500', showBtn: false, followed: true,  bg: '#c7bdff', img: 'https://images.unsplash.com/photo-1673047234576-76748e7cc74f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '일이삼사오육칠팔구십일이삼', followers: '팔로워 5',   showBtn: true,  followed: false, bg: '#b8a7ff', img: 'https://images.unsplash.com/photo-1772371272167-0117a6573d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
     ],
     [
-      { name: '카카오페이운용', followers: '팔로워 3.2만', hasBtn: true,  bg: '#FFD6A5', char: 'neo'   },
-      { name: '강남핀테크',     followers: '팔로워 1.8천', hasBtn: false, bg: '#A8E6CF', char: 'frodo' },
-      { name: '투자의신',       followers: '팔로워 12',    hasBtn: true,  bg: '#FFB3C1', char: 'neo'   },
+      { name: '카카오페이운용', followers: '팔로워 3.2만', showBtn: true,  followed: false, bg: '#FFD6A5', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '강남핀테크',     followers: '팔로워 1.8천', showBtn: false, followed: true,  bg: '#A8E6CF', img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
+      { name: '투자의신',       followers: '팔로워 12',    showBtn: true,  followed: false, bg: '#FFB3C1', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400' },
     ],
   ];
 
   let current = 1;
   let animating = false;
 
-  let config = {
-    duration: 300,
-    stagger: 60,
-    distance: 60,
-    fade: 240,
-    easing: 'ease-out',
-  };
+  let config = { duration: 300, stagger: 60, distance: 60, fade: 240, easing: 'ease-out' };
 
   function applyConfig() {
     const root = document.documentElement;
@@ -587,63 +602,38 @@
     document.getElementById('val-distance').textContent = config.distance + 'px';
     document.getElementById('val-fade').textContent     = config.fade + 'ms';
 
-    applyConfig();
-    saveToHash();
-    renderCode();
+    applyConfig(); saveToHash(); renderCode();
   }
 
   function setEasing(btn) {
     document.querySelectorAll('.easing-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     config.easing = btn.dataset.easing;
-    applyConfig();
-    saveToHash();
-    renderCode();
+    applyConfig(); saveToHash(); renderCode();
   }
 
-  function highlight(code, lang) {
-    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    let c = esc(code);
-    if (lang === 'css') {
-      c = c
-        .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
-        .replace(/(@keyframes\s+\S+|[\w-.]+(?=\s*\{))/g, '<span class="tok-selector">$1</span>')
-        .replace(/([\w-]+)(?=\s*:)/g, '<span class="tok-prop">$1</span>')
-        .replace(/:\s*([^;{}\n]+)/g, (m, v) => ': <span class="tok-val">' + v + '</span>')
-        .replace(/(\d+(?:ms|px|s|%))/g, '<span class="tok-num">$1</span>');
-    } else if (lang === 'js' || lang === 'react') {
-      c = c
-        .replace(/(\/\/[^\n]*)/g, '<span class="tok-comment">$1</span>')
-        .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
-        .replace(/\b(const|let|var|function|return|if|else|export|import|from|default|type|interface|extends|async|await|setTimeout|clearTimeout|useRef|useState)\b/g, '<span class="tok-kw">$1</span>')
-        .replace(/\b([A-Z][a-zA-Z]+)\b/g, '<span class="tok-fn">$1</span>')
-        .replace(/(`[^`]*`|&#39;[^&#39;]*&#39;|&quot;[^&quot;]*&quot;)/g, '<span class="tok-str">$1</span>')
-        .replace(/\b(\d+)\b/g, '<span class="tok-num">$1</span>');
-    }
-    return '<span class="tok-plain">' + c + '</span>';
-  }
-
-  function renderCode() {
-    const box = document.getElementById('codeOutput');
-    const hint = box.querySelector('.code-copy-hint');
-    const lang = currentTab === 'css' ? 'css' : currentTab === 'js' ? 'js' : 'react';
-    box.innerHTML = highlight(getCodeText(currentTab), lang);
-    box.appendChild(hint);
+  function toggleFollow(btn) {
+    const isFollowed = btn.classList.toggle('followed');
+    btn.textContent = isFollowed ? '팔로잉' : '팔로우';
   }
 
   function buildBlock(items) {
     const block = document.createElement('div');
     block.className = 'list-block';
+    const maskStyle = `mask-image:url('${MASK_SVG_URL}');-webkit-mask-image:url('${MASK_SVG_URL}');mask-size:36px 36px;mask-position:0 0;mask-repeat:no-repeat;-webkit-mask-size:36px 36px;-webkit-mask-position:0 0;-webkit-mask-repeat:no-repeat;`;
     block.innerHTML = items.map(item => `
       <div class="follow-item">
-        <div class="follow-avatar" style="background:${item.bg}">
-          <img src="${avatarImgs[item.char]}" alt="${item.name}" />
+        <div class="follow-avatar">
+          <div class="follow-avatar__inner" style="${maskStyle}">
+            <div class="follow-avatar__bg" style="background:${item.bg}"></div>
+            <img class="follow-avatar__img" src="${item.img}" alt="${item.name}" />
+          </div>
         </div>
         <div class="follow-text">
           <div class="follow-name">${item.name}</div>
           <div class="follow-count">${item.followers}</div>
         </div>
-        ${item.hasBtn ? '<button class="follow-btn">팔로우</button>' : ''}
+        ${item.showBtn ? `<button class="follow-btn${item.followed ? ' followed' : ''}" onclick="toggleFollow(this)">${item.followed ? '팔로잉' : '팔로우'}</button>` : ''}
       </div>
     `).join('');
     return block;
@@ -668,15 +658,11 @@
   }
 
   function saveToHash() {
-    const p = new URLSearchParams({
-      d: config.duration, s: config.stagger,
-      di: config.distance, f: config.fade,
-      e: encodeURIComponent(config.easing),
-    });
+    const p = new URLSearchParams({ d: config.duration, s: config.stagger, di: config.distance, f: config.fade, e: encodeURIComponent(config.easing) });
     history.replaceState(null, '', '#' + p.toString());
   }
 
-  function flashBtn(id, label) {
+  function flashBtn(id) {
     const btn = document.getElementById(id);
     const orig = btn.innerHTML;
     btn.innerHTML = '✓ 복사됨';
@@ -686,7 +672,7 @@
 
   function copyLink() {
     saveToHash();
-    navigator.clipboard.writeText(location.href).then(() => flashBtn('btn-link', '링크 복사'));
+    navigator.clipboard.writeText(location.href).then(() => flashBtn('btn-link'));
   }
 
   let currentTab = 'css';
@@ -698,30 +684,70 @@
     renderCode();
   }
 
-  function copyCurrentTab() {
-    const text = getCodeText(currentTab);
-    navigator.clipboard.writeText(text).then(() => {
-      const box = document.getElementById('codeOutput');
-      const hint = box.querySelector('.code-copy-hint');
-      hint.style.opacity = '1';
-      hint.textContent = '✓ 복사됨';
-      hint.style.color = '#00A86B';
-      setTimeout(() => {
-        hint.textContent = '클릭해서 복사';
-        hint.style.color = '';
-        hint.style.opacity = '';
-      }, 1500);
-    });
+  function highlight(code, lang) {
+    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    let c = esc(code);
+    if (lang === 'css') {
+      c = c
+        .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
+        .replace(/(@keyframes\s+\S+|[\w-.]+(?=\s*\{))/g, '<span class="tok-selector">$1</span>')
+        .replace(/([\w-]+)(?=\s*:)/g, '<span class="tok-prop">$1</span>')
+        .replace(/:\s*([^;{}\n]+)/g, (m, v) => ': <span class="tok-val">' + v + '</span>')
+        .replace(/(\d+(?:ms|px|s|%))/g, '<span class="tok-num">$1</span>');
+    } else {
+      c = c
+        .replace(/(\/\/[^\n]*)/g, '<span class="tok-comment">$1</span>')
+        .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
+        .replace(/\b(const|let|var|function|return|if|else|export|import|from|default|type|interface|extends|async|await|setTimeout|clearTimeout|useRef|useState)\b/g, '<span class="tok-kw">$1</span>')
+        .replace(/\b([A-Z][a-zA-Z]+)\b/g, '<span class="tok-fn">$1</span>')
+        .replace(/(`[^`]*`|&#39;[^&#39;]*&#39;|&quot;[^&quot;]*&quot;)/g, '<span class="tok-str">$1</span>')
+        .replace(/\b(\d+)\b/g, '<span class="tok-num">$1</span>');
+    }
+    return '<span class="tok-plain">' + c + '</span>';
+  }
+
+  function renderCode() {
+    const box = document.getElementById('codeOutput');
+    const hint = box.querySelector('.code-copy-hint');
+    const lang = currentTab === 'css' ? 'css' : 'js';
+    box.innerHTML = highlight(getCodeText(currentTab), lang);
+    box.appendChild(hint);
   }
 
   function getCodeText(tab) {
-    const s = config.stagger;
-    const d = config.duration;
-    const dist = config.distance;
-    const f = config.fade;
-    const e = config.easing;
+    const s = config.stagger, d = config.duration, dist = config.distance, f = config.fade, e = config.easing;
 
-    if (tab === 'css') return getCssCode();
+    if (tab === 'css') return `/* 진입: 아이템 개별 slide-up */
+@keyframes itemSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(${dist}px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 퇴장: 구 리스트 fade-out */
+@keyframes blockFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.list-block.enter .follow-item {
+  opacity: 0;
+  animation: itemSlideUp ${d}ms ${e} forwards;
+}
+
+/* stagger */
+.list-block.enter .follow-item:nth-child(1) { animation-delay: 0ms; }
+.list-block.enter .follow-item:nth-child(2) { animation-delay: ${s}ms; }
+.list-block.enter .follow-item:nth-child(3) { animation-delay: ${s * 2}ms; }
+
+.list-block.exit {
+  animation: blockFadeOut ${f}ms ease-out forwards;
+}`;
 
     if (tab === 'js') return `// 리스트 전환 함수
 function switchList(wrapper, nextItems, buildFn) {
@@ -748,7 +774,8 @@ function switchList(wrapper, nextItems, buildFn) {
   const last = items[items.length - 1];
   last.addEventListener('animationend', () => {
     newBlock.classList.remove('enter');
-    items.forEach(el => el.style.removeProperty('opacity'));
+    items.forEach(el =>
+      el.style.removeProperty('opacity'));
   }, { once: true });
 }`;
 
@@ -769,11 +796,9 @@ export function useListAnimation() {
   const next = (total: number) => {
     if (animState !== 'idle') return;
     setAnimState('exit');
-
     timer.current = setTimeout(() => {
       setPage(p => (p + 1) % total);
       setAnimState('enter');
-
       setTimeout(() => {
         setAnimState('idle');
       }, DURATION + STAGGER * 2);
@@ -781,68 +806,24 @@ export function useListAnimation() {
   };
 
   return { page, animState, next };
-}
-
-/*
-.enter .follow-item {
-  opacity: 0;
-  animation: itemSlideUp ${d}ms ${e} forwards;
-}
-.enter .follow-item:nth-child(1) { animation-delay: 0ms; }
-.enter .follow-item:nth-child(2) { animation-delay: ${s}ms; }
-.enter .follow-item:nth-child(3) { animation-delay: ${s*2}ms; }
-.exit { animation: fadeOut ${f}ms ease-out forwards; }
-
-@keyframes itemSlideUp {
-  from { opacity: 0; transform: translateY(${dist}px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-*/`;
+}`;
 
     return '';
   }
 
-  function getCssCode() {
-    const s = config.stagger;
-    return `/* 진입: 아이템 개별 slide-up */
-@keyframes itemSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(${config.distance}px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 퇴장: 구 리스트 fade-out */
-@keyframes blockFadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-.list-block.enter .follow-item {
-  opacity: 0;
-  animation: itemSlideUp ${config.duration}ms ${config.easing} forwards;
-}
-
-/* stagger */
-.list-block.enter .follow-item:nth-child(1) { animation-delay: 0ms; }
-.list-block.enter .follow-item:nth-child(2) { animation-delay: ${s}ms; }
-.list-block.enter .follow-item:nth-child(3) { animation-delay: ${s * 2}ms; }
-
-.list-block.exit {
-  animation: blockFadeOut ${config.fade}ms ease-out forwards;
-}`;
+  function copyCurrentTab() {
+    navigator.clipboard.writeText(getCodeText(currentTab)).then(() => {
+      const box = document.getElementById('codeOutput');
+      const hint = box.querySelector('.code-copy-hint');
+      hint.style.opacity = '1';
+      hint.textContent = '✓ 복사됨';
+      hint.style.color = '#00A86B';
+      setTimeout(() => { hint.textContent = '클릭해서 복사'; hint.style.color = ''; hint.style.opacity = ''; }, 1500);
+    });
   }
 
   function copyCss() {
-    navigator.clipboard.writeText(getCodeText(currentTab)).then(() => flashBtn('btn-css', 'CSS 복사'));
+    navigator.clipboard.writeText(getCodeText(currentTab)).then(() => flashBtn('btn-css'));
   }
 
   function downloadHtml() {
@@ -853,12 +834,12 @@ export function useListAnimation() {
     a.download = `animation-sample-d${config.duration}-s${config.stagger}-${config.easing.replace(/[^a-z]/g,'-')}.html`;
     a.click();
     URL.revokeObjectURL(a.href);
-    flashBtn('btn-html', 'HTML 다운로드');
+    flashBtn('btn-html');
   }
 
+  // 초기 렌더
   const wrapper = document.getElementById('listWrapper');
-  const initBlock = buildBlock(pages[current]);
-  wrapper.appendChild(initBlock);
+  wrapper.appendChild(buildBlock(pages[current]));
   loadFromHash();
   applyConfig();
   updateConfig();
@@ -885,8 +866,7 @@ export function useListAnimation() {
     oldBlock.addEventListener('animationend', () => oldBlock.remove(), { once: true });
 
     const items = newBlock.querySelectorAll('.follow-item');
-    const lastItem = items[items.length - 1];
-    lastItem.addEventListener('animationend', () => {
+    items[items.length - 1].addEventListener('animationend', () => {
       newBlock.classList.remove('enter');
       newBlock.querySelectorAll('.follow-item').forEach(el => el.style.removeProperty('opacity'));
       animating = false;
